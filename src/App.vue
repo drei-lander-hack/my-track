@@ -1,11 +1,11 @@
 <script setup lang="ts">
 import { ref } from 'vue'
 import SearchScreen from './components/SearchScreen.vue'
-
-const questions = [
-  'Wohin soll es gehen?',
-  'Danke für deine Anfrage! Wo startet der Zug denn?',
-  "Prima, dann sag' mir bitte noch, mit welchem Triebfahrzeug du unterwegs sein wirst."
+import tfz from "./assets/tfz.json"
+const steps = [
+  {question: 'Wohin soll es gehen?'},
+  {question: 'Danke für deine Anfrage! Wo startet der Zug denn?'},
+  {question: "Prima, dann sag' mir bitte noch, mit welchem Triebfahrzeug du unterwegs sein wirst.", options: tfz}
 ]
 
 const labels = ['Du fährst nach ', 'Du startest in ', 'Du fährst mit ']
@@ -26,8 +26,8 @@ function answer(answer: string) {
   </header>
 
   <div class="wrapper">
-    <div v-if="currentLine < questions.length">
-      <SearchScreen :question="questions[currentLine]" @input="(str) => answer(str)" />
+    <div v-if="currentLine < steps.length">
+      <SearchScreen :step="steps[currentLine]" @input="(str) => answer(str)" />
 
       <p v-for="(answer, index) in answers" :key="index">
         {{ labels[index] }}

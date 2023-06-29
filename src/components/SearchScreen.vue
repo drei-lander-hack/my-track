@@ -1,8 +1,12 @@
 <script setup lang="ts">
 import { ref } from 'vue'
+import 'vue3-simple-typeahead/dist/vue3-simple-typeahead.css'; //Optional default CSS
 
 defineProps<{
-  question: string
+  step: {
+    question: string,
+    options?: string[]
+  }
 }>()
 const emit = defineEmits(["input"])
 const input = ref('')
@@ -21,9 +25,16 @@ function doSearch() {
 
 <template>
   <label>
-    <p>{{ question }}</p>
-    <input v-model="input" @keypress="keypress" />
+    <p>{{ step.question }}</p>
+    <input v-model="input" @keypress="keypress" v-if="!step.options" />
+    <vue3-simple-typeahead v-else
+        id="typeahead_id"
+        placeholder="Start writing..."
+        :items="step.options"
+        :minInputLength="1"
 
+    >
+    </vue3-simple-typeahead>
     <button @click="doSearch">Ok</button>
   </label>
 </template>
