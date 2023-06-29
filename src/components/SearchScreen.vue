@@ -31,16 +31,13 @@ function doSearch() {
 <style scoped>
 label {
   display: block;
-  width: 40rem;
-  max-width: 100%;
   margin: 0 auto;
 }
 
 input {
   font-size: 20px;
   padding: 3px;
-  width: 40rem;
-  max-width: 100%;
+  width: 100%;
   display: block;
 }
 
