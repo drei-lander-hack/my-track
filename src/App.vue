@@ -123,11 +123,12 @@ img {
 
 .legend {
   display: flex;
+  justify-content: space-evenly;
 }
 
 .legend div {
   margin: 0.5rem;
-  padding: 0.5rem;
+  padding: 0.5rem 1rem;
 }
 
 .legend p, .legend b {
