@@ -1,14 +1,18 @@
 <script setup lang="ts">
 import { ref } from 'vue'
-import SearchScreen from './components/SearchScreen.vue'
-import tfz from "./assets/tfz.json"
+import InputField from './components/InputField.vue'
+import tfz from './assets/tfz.json'
 const steps = [
-  {question: 'Wohin soll es gehen?'},
-  {question: 'Danke für deine Anfrage! Wo startet der Zug denn?'},
-  {question: "Prima, dann sag' mir bitte noch, mit welchem Triebfahrzeug du unterwegs sein wirst.", options: tfz}
+  { question: 'Wohin soll es gehen?' },
+  { question: 'Wo startet der Zug denn?' },
+  {
+    question: "Prima, dann sag' mir bitte noch, mit welchem Triebfahrzeug du unterwegs sein wirst.",
+    options: tfz
+  },
+  { question: 'Oh, dann brauche ich noch die Länge des Zugs' }
 ]
 
-const labels = ['Du fährst nach ', 'Du startest in ', 'Du fährst mit ']
+const labels = ['Du fährst nach', 'Du startest in', 'Du fährst mit einer']
 
 const answers = ref<string[]>([])
 
@@ -18,21 +22,29 @@ function answer(answer: string) {
   answers.value.push(answer)
   currentLine.value++
 }
+
+function startOver() {
+  currentLine.value = 0
+  answers.value = []
+}
 </script>
 
 <template>
   <header>
-    <img alt="Vue logo" class="logo" src="./assets/logo.png" width="125" height="125" />
+    <a @click="startOver">
+      <img alt="Vue logo" class="logo" src="./assets/logo.png" width="125" height="125" />
+    </a>
   </header>
 
   <div class="wrapper">
     <div v-if="currentLine < steps.length">
-      <SearchScreen :step="steps[currentLine]" @input="(str) => answer(str)" />
-
       <p v-for="(answer, index) in answers" :key="index">
         {{ labels[index] }}
         {{ answer }}
       </p>
+
+      <p>{{ steps[currentLine].question }}</p>
+      <InputField :options="steps[currentLine].options" @input="(str) => answer(str)" />
     </div>
 
     <div v-else>
