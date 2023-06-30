@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { ref } from 'vue'
-import logo from './assets/logo.png'
-import {DbBrand, DbFooter, DbHeader, DbPage} from "@db-ui/v-elements/dist/components";
+import logo from './assets/logo.jpeg'
+import { DbBrand, DbFooter, DbHeader, DbPage } from '@db-ui/v-elements/dist/components'
 
 import InputField from './components/InputField.vue'
 import tfz from './assets/tfz.json'
@@ -54,69 +54,63 @@ function startOver() {
 <template>
   <DbPage>
     <DbHeader>
-      <DbBrand :src="logo" @click="startOver">My awesome App</DbBrand>
+      <DbBrand :src="logo" @click="startOver" style="font-size: 32px;">Meine Trasse, Deine Trasse</DbBrand>
     </DbHeader>
 
+    <div class="wrapper">
+      <p v-for="(answer, index) in answers" :key="index">
+        {{ steps[index].answer }}
+        {{ answer }}.
+      </p>
 
-  <div class="wrapper">
-    <p v-for="(answer, index) in answers" :key="index">
-      {{ steps[index].answer }}
-      {{ answer }}.
-    </p>
+      <div v-if="state === 'asking'">
+        <p>{{ steps[currentLine].question }}</p>
+        <InputField :options="steps[currentLine].options" @input="(str) => answer(str)" />
+      </div>
 
-    <div v-if="state === 'asking'">
-      <p>{{ steps[currentLine].question }}</p>
-      <InputField :options="steps[currentLine].options" @input="(str) => answer(str)" />
-    </div>
+      <div v-if="state === 'calculating'">
+        <p>Ich suche passende Trassen...</p>
+        <img src="./assets/spinner.gif" />
+      </div>
 
-    <div v-if="state === 'calculating'">
-      <p>Ich suche passende Trassen...</p>
-      <img src="./assets/spinner.gif" />
-    </div>
+      <div v-if="state === 'selecting'">
+        <p>Ich habe nun ein paar Routenvorschläge für dich:</p>
+        <img src="/src/assets/routen.png" />
 
-    <div v-if="state === 'selecting'">
-      <p>Ich habe nun ein paar Routenvorschläge für dich:</p>
-      <img src="/src/assets/routen.png" />
+        <div class="legend">
+          <div class="cheapest">
+            <p><b>Kosten: 693€</b></p>
+            <p>Fahrdauer: 5:21</p>
+            <p>Energieverbrauch: 45MWh</p>
 
-      <div class="legend">
-        <div class="cheapest">
-          <p><b>Kosten: 693€</b></p>
-          <p>Fahrdauer: 5:21</p>
-          <p>Energieverbrauch: 45MWh</p>
+            <button @click="selectOption('cheapest')">Reservieren</button>
+          </div>
 
-          <button @click="selectOption('cheapest')">Reservieren</button>
-        </div>
+          <div class="fastest">
+            <p>Kosten: 1200€</p>
+            <p><b>Fahrdauer: 4:50</b></p>
+            <p>Energieverbrauch: 56MWh</p>
 
-        <div class="fastest">
-          <p>Kosten: 1200€</p>
-          <p><b>Fahrdauer: 4:50</b></p>
-          <p>Energieverbrauch: 56MWh</p>
+            <button @click="selectOption('fastest')">Reservieren</button>
+          </div>
 
-          <button @click="selectOption('fastest')">Reservieren</button>
-        </div>
+          <div class="shortest">
+            <p>Kosten: 807€</p>
+            <p>Fahrdauer: 6:55</p>
+            <p><b>Energieverbrauch: 39MWh</b></p>
 
-        <div class="shortest">
-          <p>Kosten: 807€</p>
-          <p>Fahrdauer: 6:55</p>
-          <p><b>Energieverbrauch: 39MWh</b></p>
-
-          <button @click="selectOption('shortest')">Reservieren</button>
+            <button @click="selectOption('shortest')">Reservieren</button>
+          </div>
         </div>
       </div>
-    </div>
 
-    <div v-if="state === 'complete'">
-      Fertig
+      <div v-if="state === 'complete'">Fertig</div>
     </div>
-  </div>
-  <DbFooter copyright border ></DbFooter>
+    <DbFooter copyright border></DbFooter>
   </DbPage>
-
 </template>
 
 <style scoped>
-
-
 img {
   max-width: 100%;
 }
@@ -131,7 +125,8 @@ img {
   padding: 0.5rem 1rem;
 }
 
-.legend p, .legend b {
+.legend p,
+.legend b {
   font-size: 15px;
 }
 
