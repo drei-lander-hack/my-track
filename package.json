@@ -13,6 +13,7 @@
     "format": "prettier --write src/"
   },
   "dependencies": {
+    "@db-ui/v-elements": "^0.24.3",
     "vue": "^3.3.4",
     "vue3-simple-typeahead": "^1.0.11"
   },

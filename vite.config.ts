@@ -9,8 +9,14 @@ export default defineConfig({
     vue(),
   ],
   resolve: {
+    dedupe: ['vue'], // <-- this is required for vite build
     alias: {
       '@': fileURLToPath(new URL('./src', import.meta.url))
+    }
+  },
+  server: {
+    fs: {
+      strict: false // <-- was required to start dev
     }
   }
 })

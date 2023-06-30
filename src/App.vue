@@ -1,5 +1,8 @@
 <script setup lang="ts">
 import { ref } from 'vue'
+import logo from './assets/logo.png'
+import {DbBrand, DbFooter, DbHeader, DbPage} from "@db-ui/v-elements/dist/components";
+
 import InputField from './components/InputField.vue'
 import tfz from './assets/tfz.json'
 
@@ -49,11 +52,11 @@ function startOver() {
 </script>
 
 <template>
-  <header>
-    <a @click="startOver">
-      <img alt="Vue logo" class="logo" src="./assets/logo.png" width="125" height="125" />
-    </a>
-  </header>
+  <DbPage>
+    <DbHeader>
+      <DbBrand :src="logo" @click="startOver">My awesome App</DbBrand>
+    </DbHeader>
+
 
   <div class="wrapper">
     <p v-for="(answer, index) in answers" :key="index">
@@ -82,21 +85,17 @@ function startOver() {
       </div>
     </div>
 
-    <div v-if="state === 'complete'"> 
+    <div v-if="state === 'complete'">
       Fertig
     </div>
   </div>
+  <DbFooter copyright border ></DbFooter>
+  </DbPage>
+
 </template>
 
 <style scoped>
-header {
-  line-height: 1.5;
-}
 
-.logo {
-  display: block;
-  margin: 0;
-}
 
 img {
   max-width: 100%;
