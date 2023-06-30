@@ -4,8 +4,13 @@
   min-width: 80%;
   margin: 0 auto;
   padding: 0 1rem;
-  min-height: 80vh;
+  flex-grow: 1;
+}
 
+.rea-page main>db-header {
+  flex-grow: 0;
+  flex-shrink: 0;
+  height: 100px;
 }
 
 span.is-site-name {

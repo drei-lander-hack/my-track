@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { ref } from 'vue'
 import logo from './assets/logo.jpeg'
-import { DbBrand, DbFooter, DbHeader, DbPage } from '@db-ui/v-elements/dist/components'
+import {DbBrand, DbHeader, DbPage} from '@db-ui/v-elements/dist/components'
 
 import InputField from './components/InputField.vue'
 import tfz from './assets/tfz.json'
@@ -75,7 +75,7 @@ function startOver() {
 
       <div v-if="state === 'selecting'">
         <p>Ich habe nun ein paar Routenvorschläge für dich:</p>
-        <img src="/src/assets/routen.png" />
+        <img class="map" src="/src/assets/routen.png" />
 
         <div class="legend">
           <div class="cheapest">
@@ -106,13 +106,16 @@ function startOver() {
 
       <div v-if="state === 'complete'">Fertig</div>
     </div>
-    <DbFooter copyright border></DbFooter>
   </DbPage>
 </template>
 
 <style scoped>
 img {
   max-width: 100%;
+}
+
+.map {
+  max-height: 45vh;
 }
 
 .legend {
