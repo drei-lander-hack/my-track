@@ -14,6 +14,11 @@ function keypress(event: KeyboardEvent) {
   }
 }
 
+function selectItem(item: string) {
+  emit('input', item)
+  input.value = ''
+}
+
 function doSearch() {
   emit('input', input.value)
   input.value = ''
@@ -29,6 +34,7 @@ function doSearch() {
       placeholder="Gib' ein paar Zeichen ein..."
       :items="options"
       :minInputLength="1"
+      @selectItem="selectItem"
     >
     </vue3-simple-typeahead>
     <button @click="doSearch">Ok</button>
