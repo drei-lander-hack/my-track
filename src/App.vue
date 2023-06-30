@@ -53,6 +53,12 @@ function startOver() {
     <div v-else>
       <p>Ich habe nun ein paar Routenvorschläge für dich:</p>
       <img src="/src/assets/routen.png" />
+
+      <div class="legend">
+        <div class="shortest">Kürzeste Strecke <button>Reservieren</button></div>
+        <div class="cheapest">Günstigste Strecke <button>Reservieren</button></div>
+        <div class="fastest">Schnellste Strecke <button>Reservieren</button></div>
+      </div>
     </div>
   </div>
 </template>
@@ -69,5 +75,29 @@ header {
 
 img {
   max-width: 100%;
+}
+
+.legend div::before {
+  display: inline-block;
+  content: "";
+  height: 4px;
+  width: 50px;
+  margin: -0.5rem 0.5rem 0 0;
+}
+
+.shortest::before {
+  background-color: violet;
+}
+.fastest::before {
+  background-color: aqua;
+}
+.cheapest::before {
+  background-color: red;
+}
+
+.legend button {
+  margin: 0;
+  padding: 0 10px;
+  font-size: 18px;
 }
 </style>
