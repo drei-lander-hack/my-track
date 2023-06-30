@@ -18,10 +18,12 @@ const steps = [
 ]
 
 const answers = ref<string[]>([])
+const reserved = ref<RouteType>()
 
 const currentLine = ref(0)
 
 type State = 'asking' | 'calculating' | 'selecting' | 'complete'
+type RouteType = "shortest" | "cheapest" | "fastest"
 
 const state = ref<State>('asking')
 
@@ -32,6 +34,11 @@ function answer(answer: string) {
     state.value = 'calculating'
     setTimeout(() => (state.value = 'selecting'), 2000)
   }
+}
+
+function selectOption(type: RouteType) {
+  reserved.value = type
+  state.value = "complete"
 }
 
 function startOver() {
@@ -69,14 +76,14 @@ function startOver() {
       <img src="/src/assets/routen.png" />
 
       <div class="legend">
-        <div class="shortest">Kürzeste Strecke <button>Reservieren</button></div>
-        <div class="cheapest">Günstigste Strecke <button>Reservieren</button></div>
-        <div class="fastest">Schnellste Strecke <button>Reservieren</button></div>
+        <div class="shortest">Kürzeste Strecke <button @click="selectOption('shortest')">Reservieren</button></div>
+        <div class="cheapest">Günstigste Strecke <button @click="selectOption('cheapest')">Reservieren</button></div>
+        <div class="fastest">Schnellste Strecke <button @click="selectOption('fastest')">Reservieren</button></div>
       </div>
     </div>
 
-    <div v-if="state === 'complete'">
-      
+    <div v-if="state === 'complete'"> 
+      Fertig
     </div>
   </div>
 </template>
@@ -95,21 +102,22 @@ img {
   max-width: 100%;
 }
 
-.legend div::before {
-  display: inline-block;
-  content: '';
-  height: 4px;
-  width: 50px;
-  margin: -0.5rem 0.5rem 0 0;
+.legend {
+  display: flex;
 }
 
-.shortest::before {
+.legend div {
+  margin: 0.5rem;
+  padding: 0.5rem;
+}
+
+.shortest {
   background-color: violet;
 }
-.fastest::before {
+.fastest {
   background-color: aqua;
 }
-.cheapest::before {
+.cheapest {
   background-color: red;
 }
 
