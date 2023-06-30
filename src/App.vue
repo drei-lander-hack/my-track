@@ -21,14 +21,23 @@ const answers = ref<string[]>([])
 
 const currentLine = ref(0)
 
+type State = 'asking' | 'calculating' | 'selecting' | 'complete'
+
+const state = ref<State>('asking')
+
 function answer(answer: string) {
   answers.value.push(answer)
   currentLine.value++
+  if (currentLine.value === steps.length) {
+    state.value = 'calculating'
+    setTimeout(() => (state.value = 'selecting'), 2000)
+  }
 }
 
 function startOver() {
   currentLine.value = 0
   answers.value = []
+  state.value = 'asking'
 }
 </script>
 
@@ -45,12 +54,17 @@ function startOver() {
       {{ answer }}.
     </p>
 
-    <div v-if="currentLine < steps.length">
+    <div v-if="state === 'asking'">
       <p>{{ steps[currentLine].question }}</p>
       <InputField :options="steps[currentLine].options" @input="(str) => answer(str)" />
     </div>
 
-    <div v-else>
+    <div v-if="state === 'calculating'">
+      <p>Ich suche passende Trassen...</p>
+      <img src="./assets/spinner.gif" />
+    </div>
+
+    <div v-if="state === 'selecting'">
       <p>Ich habe nun ein paar Routenvorschläge für dich:</p>
       <img src="/src/assets/routen.png" />
 
@@ -59,6 +73,10 @@ function startOver() {
         <div class="cheapest">Günstigste Strecke <button>Reservieren</button></div>
         <div class="fastest">Schnellste Strecke <button>Reservieren</button></div>
       </div>
+    </div>
+
+    <div v-if="state === 'complete'">
+      
     </div>
   </div>
 </template>
@@ -79,7 +97,7 @@ img {
 
 .legend div::before {
   display: inline-block;
-  content: "";
+  content: '';
   height: 4px;
   width: 50px;
   margin: -0.5rem 0.5rem 0 0;
