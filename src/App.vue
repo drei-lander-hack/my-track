@@ -104,7 +104,13 @@ function startOver() {
         </div>
       </div>
 
-      <div v-if="state === 'complete'">Fertig</div>
+      <div v-if="state === 'complete'" class="confirmation">
+        <p>Deine Trasse wurde wie folgt gebucht:</p>
+        <p class="timetable"><span>8:24</span><span>11:52</span> Stuttgart - Bregenz</p>
+        <p class="timetable"><span>12:03</span><span>13:40</span> Bregenz - Zürich</p>
+
+        <p class="costs">Preis der Trasse: 807€</p>
+      </div>
     </div>
   </DbPage>
 </template>
@@ -147,5 +153,17 @@ img {
   margin: 0.5rem 0;
   padding: 0 10px;
   font-size: 18px;
+}
+
+.confirmation {
+  border: 1px solid grey;
+  border-radius: 15px;
+  padding: 10px;
+}
+
+.timetable span {
+  display: inline-block;
+  width: 50px;
+  margin-right: 1rem;
 }
 </style>
