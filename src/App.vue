@@ -26,7 +26,7 @@ const reserved = ref<RouteType>()
 const currentLine = ref(0)
 
 type State = 'asking' | 'calculating' | 'selecting' | 'complete'
-type RouteType = "shortest" | "cheapest" | "fastest"
+type RouteType = 'shortest' | 'cheapest' | 'fastest'
 
 const state = ref<State>('asking')
 
@@ -41,7 +41,7 @@ function answer(answer: string) {
 
 function selectOption(type: RouteType) {
   reserved.value = type
-  state.value = "complete"
+  state.value = 'complete'
 }
 
 function startOver() {
@@ -79,9 +79,29 @@ function startOver() {
       <img src="/src/assets/routen.png" />
 
       <div class="legend">
-        <div class="shortest">Kürzeste Strecke <button @click="selectOption('shortest')">Reservieren</button></div>
-        <div class="cheapest">Günstigste Strecke <button @click="selectOption('cheapest')">Reservieren</button></div>
-        <div class="fastest">Schnellste Strecke <button @click="selectOption('fastest')">Reservieren</button></div>
+        <div class="cheapest">
+          <p><b>Kosten: 693€</b></p>
+          <p>Fahrdauer: 5:21</p>
+          <p>Energieverbrauch: 45MWh</p>
+
+          <button @click="selectOption('cheapest')">Reservieren</button>
+        </div>
+
+        <div class="fastest">
+          <p>Kosten: 1200€</p>
+          <p><b>Fahrdauer: 4:50</b></p>
+          <p>Energieverbrauch: 56MWh</p>
+
+          <button @click="selectOption('fastest')">Reservieren</button>
+        </div>
+
+        <div class="shortest">
+          <p>Kosten: 807€</p>
+          <p>Fahrdauer: 6:55</p>
+          <p><b>Energieverbrauch: 39MWh</b></p>
+
+          <button @click="selectOption('shortest')">Reservieren</button>
+        </div>
       </div>
     </div>
 
@@ -110,6 +130,10 @@ img {
   padding: 0.5rem;
 }
 
+.legend p, .legend b {
+  font-size: 15px;
+}
+
 .shortest {
   background-color: violet;
 }
@@ -121,7 +145,7 @@ img {
 }
 
 .legend button {
-  margin: 0;
+  margin: 0.5rem 0;
   padding: 0 10px;
   font-size: 18px;
 }
