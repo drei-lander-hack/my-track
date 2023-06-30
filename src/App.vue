@@ -1,14 +1,14 @@
 <script setup lang="ts">
-import { ref } from 'vue'
+import {ref} from 'vue'
 import logo from './assets/logo.jpeg'
-import {DbBrand, DbHeader, DbPage} from '@db-ui/v-elements/dist/components'
+import {DbBrand, DbCard, DbCards, DbHeader, DbPage} from '@db-ui/v-elements/dist/components'
 
 import InputField from './components/InputField.vue'
 import tfz from './assets/tfz.json'
 
 const steps = [
-  { question: 'Wohin soll es gehen?', answer: 'Du fährst nach' },
-  { question: 'Wo startet der Zug denn?', answer: 'Du startest in' },
+  {question: 'Wohin soll es gehen?', answer: 'Du fährst nach'},
+  {question: 'Wo startet der Zug denn?', answer: 'Du startest in'},
   {
     question: "Prima, dann sag' mir bitte noch, mit welchem Triebfahrzeug du unterwegs sein wirst.",
     options: tfz,
@@ -65,43 +65,49 @@ function startOver() {
 
       <div v-if="state === 'asking'">
         <p>{{ steps[currentLine].question }}</p>
-        <InputField :options="steps[currentLine].options" @input="(str) => answer(str)" />
+        <InputField :options="steps[currentLine].options" @input="(str) => answer(str)"/>
       </div>
 
       <div v-if="state === 'calculating'">
         <p>Ich suche passende Trassen...</p>
-        <img src="./assets/spinner.gif" />
+        <img src="./assets/spinner.gif"/>
       </div>
 
       <div v-if="state === 'selecting'">
         <p>Ich habe nun ein paar Routenvorschläge für dich:</p>
-        <img class="map" src="/src/assets/routen.png" />
+        <img class="map" src="/src/assets/routen.png"/>
 
-        <div class="legend">
-          <div class="cheapest">
-            <p><b>Kosten: 693€</b></p>
-            <p>Fahrdauer: 5:21</p>
-            <p>Energieverbrauch: 45MWh</p>
 
-            <button @click="selectOption('cheapest')">Reservieren</button>
-          </div>
+        <db-cards class="legend">
+          <db-card illustration="savings">
+            <span class="cheapest">
+              <hr>
+              <p><b>Kosten: 693€</b></p>
+              <p>Fahrdauer: 5:21</p>
+              <p>Energieverbrauch: 45MWh</p>
 
-          <div class="fastest">
+              <button @click="selectOption('cheapest')">Reservieren</button>
+            </span>
+          </db-card>
+          <db-card illustration="timetable"> <span class="fastest">
+            <hr>
             <p>Kosten: 1200€</p>
             <p><b>Fahrdauer: 4:50</b></p>
             <p>Energieverbrauch: 56MWh</p>
 
             <button @click="selectOption('fastest')">Reservieren</button>
-          </div>
-
-          <div class="shortest">
+          </span>
+          </db-card>
+          <db-card illustration="green"> <span class="shortest">
+            <hr>
             <p>Kosten: 807€</p>
             <p>Fahrdauer: 6:55</p>
             <p><b>Energieverbrauch: 39MWh</b></p>
 
             <button @click="selectOption('shortest')">Reservieren</button>
-          </div>
-        </div>
+          </span></db-card>
+        </db-cards>
+
       </div>
 
       <div v-if="state === 'complete'" class="confirmation">
@@ -122,16 +128,7 @@ img {
 
 .map {
   max-height: 45vh;
-}
-
-.legend {
-  display: flex;
-  justify-content: space-evenly;
-}
-
-.legend div {
-  margin: 0.5rem;
-  padding: 0.5rem 1rem;
+  margin-bottom: 1rem;
 }
 
 .legend p,
@@ -139,14 +136,23 @@ img {
   font-size: 15px;
 }
 
-.shortest {
-  background-color: violet;
+.legend hr{
+  display: block;
+  width: 100%;
+  height: 2px;
+  border: 0;
+  border-top: 2px solid;
 }
-.fastest {
-  background-color: aqua;
+.shortest hr {
+  border-color: #DE8CCA;
 }
-.cheapest {
-  background-color: red;
+
+.fastest hr{
+  border-color: #91B5E7;
+}
+
+.cheapest hr{
+  border-color: #B92A1F;
 }
 
 .legend button {

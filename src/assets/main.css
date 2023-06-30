@@ -13,8 +13,18 @@
   height: 100px;
 }
 
+.legend .cmp-card figcaption {
+  width: 80%;
+}
+
 span.is-site-name {
-  font-size: 32px;
+  font-size: 22px;
+}
+
+@media screen and (min-width:700px) {
+  span.is-site-name {
+    font-size: 32px;
+  }
 }
 
 @media (hover: hover) {
