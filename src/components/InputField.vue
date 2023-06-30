@@ -34,6 +34,7 @@ function doSearch() {
       placeholder="Gib' ein paar Zeichen ein..."
       :items="options"
       :minInputLength="1"
+      autofocus
       @selectItem="selectItem"
     >
     </vue3-simple-typeahead>
