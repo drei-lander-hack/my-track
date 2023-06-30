@@ -54,7 +54,7 @@ function startOver() {
 <template>
   <DbPage>
     <DbHeader>
-      <DbBrand :src="logo" @click="startOver" style="font-size: 32px;">Meine Trasse, Deine Trasse</DbBrand>
+      <DbBrand :src="logo" @click="startOver">Meine Trasse, Deine Trasse</DbBrand>
     </DbHeader>
 
     <div class="wrapper">

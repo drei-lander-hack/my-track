@@ -8,6 +8,10 @@
 
 }
 
+span.is-site-name {
+  font-size: 32px;
+}
+
 @media (hover: hover) {
   a:hover {
     background-color: hsla(160, 100%, 37%, 0.2);
